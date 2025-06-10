@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercício 3 - Pedido de Produto</title>
 </head>
+
 <body>
     <h1>Formulário de Pedido de Produto</h1>
     <form action="" method="post">
@@ -32,8 +33,8 @@
         require_once 'classe.php';
 
         $nomeProduto = $_POST['productName'];
-        $quantidade = (int)$_POST['quantity'];
-        $precoUnitario = (float)$_POST['unitPrice'];
+        $quantidade = (int) $_POST['quantity'];
+        $precoUnitario = (float) $_POST['unitPrice'];
         $tipoCliente = $_POST['customerType'];
 
         $pedido = new Pedido($nomeProduto, $quantidade, $precoUnitario, $tipoCliente);
@@ -51,4 +52,5 @@
     }
     ?>
 </body>
+
 </html>
