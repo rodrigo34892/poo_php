@@ -1,5 +1,5 @@
 <?php
-<?php
+
 
 class Funcionario {
     private $nome;

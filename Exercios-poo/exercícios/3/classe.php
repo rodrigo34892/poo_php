@@ -1,54 +1,48 @@
 <?php
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercício 3 - Pedido de Produto</title>
-</head>
-<body>
-    <h1>Formulário de Pedido de Produto</h1>
-    <form action="" method="post">
-        <label for="productName">Nome do Produto:</label>
-        <input type="text" id="productName" name="productName" required><br><br>
 
-        <label for="quantity">Quantidade:</label>
-        <input type="number" id="quantity" name="quantity" required><br><br>
+class Pedido {
+    private $nomeProduto;
+    private $quantidade;
+    private $precoUnitario;
+    private $tipoCliente;
 
-        <label for="unitPrice">Preço Unitário:</label>
-        <input type="number" step="0.01" id="unitPrice" name="unitPrice" required><br><br>
-
-        <label for="customerType">Tipo de Cliente:</label>
-        <select id="customerType" name="customerType" required>
-            <option value="regular">Normal</option>
-            <option value="premium">Premium</option>
-        </select><br><br>
-
-        <input type="submit" value="Calcular">
-    </form>
-
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require_once 'Exercise3.php';
-
-        $nomeProduto = $_POST['productName'];
-        $quantidade = (int)$_POST['quantity'];
-        $precoUnitario = (float)$_POST['unitPrice'];
-        $tipoCliente = $_POST['customerType'];
-
-        $pedido = new Pedido($nomeProduto, $quantidade, $precoUnitario, $tipoCliente);
-        $detalhes = $pedido->detalhesPedido();
-
-        echo "<h2>Resumo do Pedido:</h2>";
-        echo "Produto: " . htmlspecialchars($detalhes['nomeProduto']) . "<br>";
-        echo "Quantidade: " . $detalhes['quantidade'] . "<br>";
-        echo "Preço Unitário: R$ " . number_format($detalhes['precoUnitario'], 2, ',', '.') . "<br>";
-        echo "Tipo de Cliente: " . ($detalhes['tipoCliente'] === 'premium' ? 'Premium' : 'Normal') . "<br>";
-        echo "Total Bruto: R$ " . number_format($detalhes['totalBruto'], 2, ',', '.') . "<br>";
-        echo "Desconto: R$ " . number_format($detalhes['desconto'], 2, ',', '.') . "<br>";
-        echo "Imposto: R$ " . number_format($detalhes['imposto'], 2, ',', '.') . "<br>";
-        echo "<strong>Total Final: R$ " . number_format($detalhes['totalFinal'], 2, ',', '.') . "</strong><br>";
+    public function __construct($nomeProduto, $quantidade, $precoUnitario, $tipoCliente) {
+        $this->nomeProduto = $nomeProduto;
+        $this->quantidade = $quantidade;
+        $this->precoUnitario = $precoUnitario;
+        $this->tipoCliente = $tipoCliente;
     }
+
+    public function calcularTotalBruto() {
+        return $this->quantidade * $this->precoUnitario;
+    }
+
+    public function calcularDesconto() {
+        if ($this->tipoCliente === 'premium') {
+            return $this->calcularTotalBruto() * 0.10; // 10% para premium
+        }
+        return 0;
+    }
+
+    public function calcularImposto() {
+        return $this->calcularTotalBruto() * 0.08; // 8% de imposto
+    }
+
+    public function calcularTotalFinal() {
+        return $this->calcularTotalBruto() - $this->calcularDesconto() + $this->calcularImposto();
+    }
+
+    public function detalhesPedido() {
+        return [
+            'nomeProduto' => $this->nomeProduto,
+            'quantidade' => $this->quantidade,
+            'precoUnitario' => $this->precoUnitario,
+            'tipoCliente' => $this->tipoCliente,
+            'totalBruto' => $this->calcularTotalBruto(),
+            'desconto' => $this->calcularDesconto(),
+            'imposto' => $this->calcularImposto(),
+            'totalFinal' => $this->calcularTotalFinal(),
+        ];
+    }
+}
     ?>
-</body>
-</html>

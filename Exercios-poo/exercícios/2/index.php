@@ -1,4 +1,4 @@
-<?php
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -29,7 +29,7 @@
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require_once 'Exercise2.php';
+        require_once 'classe.php';
 
         $nome = $_POST['name'];
         $disciplina = $_POST['subject'];
