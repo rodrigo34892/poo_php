@@ -5,20 +5,19 @@ Este projeto contém vários exercícios para praticar conceitos de programaçã
 ## Estrutura do Projeto
 
 ```
-php-exercises
-├── exercises
-│   ├── exercise1
+poo-php
+├── Exerícios-poo
+│   ├── 1
 │   │   ├── index.php        // Formulário para dados do funcionário
 │   │   └── classe.php    // Classe para cálculos do funcionário
-│   ├── exercise2
+│   ├── 2
 │   │   ├── index.php        // Formulário para dados do aluno
 │   │   └── classe.php    // Classe para cálculos do aluno
-│   └── exercise3
+│   └── 3
 │       ├── index.php        // Formulário para dados do produto
 │       └── classe.php    // Classe para cálculos do pedido
 ├── README.md                // Documentação do projeto
-└── composer.json            // Configuração do Composer
-```
+
 
 ## Exercício 1: Dados do Funcionário
 
